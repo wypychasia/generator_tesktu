@@ -34,9 +34,40 @@ char* usun_z_wektora(char* wektor){
 	return wektor;	
 }
 void generowanie(int dl_wektora){
-	int c;
-	
+	int c,d,i;
+	int licznik =0;
+	char pomocniczy[500];
+		
 	srand(time(NULL));
 	c= rand()/(RAND_MAX+1.0)*(dl_wektora);
+
+	strcmp(pomocniczy, wektor[c].wyraz);
+	fprintf(plik, "%s", pomocniczy);
+	while(wektor[c].next !=NULL)
+		licznik++;
+	d=rand()/(RAND_MAX+1.0)*licznik;
+	for(i=0; i<d; i++){
+		wektor[c].wyraz=wektor[c].next;
+	}	
+	fprintf(plik, "%s", wektor[c].wyraz);
+	usun_z_wektora(pomocniczy);
+	strcat(pomocniczy,wektor[c].wyraz);
+	
+	while( *wektor.wyraz != NULL){
+		for(i=0; i<dl_wektora; i++){
+			if(strcmp(wektor[i], pomocniczy))
+				break;	
+		}
+		while(wektor[i].next !=NULL)
+			licznik++;
+		d=0;
+		d=rand()/(RAND_MAX+1.0)*licznik;
+		for(i=0; i<d; i++){
+			wektor[i].wyraz=wektor[i].next;
+		}	
+		fprintf(plik, "%s", wektor[i].wyraz);
+		usun_z_wektora(pomocniczy);
+		strcat(pomocniczy,wektor[i].wyraz); 
+}
 }
 
