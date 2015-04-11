@@ -2,6 +2,6 @@
 #define _GENERATOR_H_
 
 char* usun_z_wektora(char* wektor);
-void generowanie(int dl_wektora);
+void generowanie(FILE *tekst, int ngram, FILE *plik);
 
 #endif

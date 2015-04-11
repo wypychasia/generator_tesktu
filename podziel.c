@@ -19,19 +19,20 @@ char* czytaj_slowo(FILE *tekst){
 	slowo[i]=0;
 	return slowo;
 }
-void dopisz_ngram(char *wyraz){
+int dopisz_ngram(char *wyraz){
 	int liczba_ngramow = 0;
 	int i;
 
 	for (i = 0; i < dl_wektora; i++){
 		if (strcmp(wyraz, wektor[i].wyraz) == 0){
-			break;
+			return 0;
 		}
 	}
 
 	strcpy(wektor[dl_wektora].wyraz, wyraz);
 	dl_wektora++;
 	liczba_ngramow++;
+	return 0;
 	
 
 }
@@ -40,15 +41,15 @@ void dopisz_slowo(char *sufiks, char *wyraz){
 
 	for (i = 0; i < dl_wektora; i++){
 		if (strcmp(wyraz, wektor[i].wyraz) == 0){
-			dodaj(wektor[i].next, sufiks);
+			wektor[i].next=dodaj(wektor[i].next, sufiks);
 		}
 	}
-	printf("sufiks=%s\n",sufiks);
 }
 lista_t *dodaj(lista_t *l, char *slowo){
 	lista_t *aux, *tmp;
 
-	aux = malloc(sizeof(lista_t));
+	aux=malloc(sizeof(lista_t));
+
 	strcpy(aux->wyraz, slowo);
 	aux->next = NULL;
 
@@ -60,13 +61,12 @@ lista_t *dodaj(lista_t *l, char *slowo){
 	}
 	return l;
 }
-void podzial(FILE *tekst, int dltekstu,int ilosc_linii, int ngram){
+int podzial(FILE *tekst, int ngram){
 	int max_dl_txt = 100;
-	int i,k;
+	int i,k,f;
 	char wyraz[5000];
 	char slowo[200];
 	char sufiks[200];
-
 
 	lista_t *l, *aux;
 	l = NULL;
@@ -76,6 +76,7 @@ void podzial(FILE *tekst, int dltekstu,int ilosc_linii, int ngram){
 		strcpy(slowo, czytaj_slowo(tekst));
 		l = dodaj(l, slowo);
 	}
+
 	for (aux = l; aux->next != NULL; aux = aux->next);
 	aux->next = l;
 	
@@ -112,7 +113,6 @@ void podzial(FILE *tekst, int dltekstu,int ilosc_linii, int ngram){
 			strcat(wyraz, aux->wyraz);
 			strcat(wyraz, " ");
 		}
-		printf("wyraz=%s\n",wyraz);
 		strcpy(sufiks, aux->wyraz);
 		dopisz_slowo(sufiks, wyraz);
 		strcpy(slowo, czytaj_slowo(tekst));
@@ -124,19 +124,8 @@ void podzial(FILE *tekst, int dltekstu,int ilosc_linii, int ngram){
             strcat(wyraz, aux->wyraz);
             strcat(wyraz, " ");
                 }
-	 printf("wyraz=%s\n",wyraz);
- strcpy(sufiks, aux->wyraz);
+	 strcpy(sufiks, aux->wyraz);
                 dopisz_slowo(sufiks, wyraz);
-	
 
-
-}	
-
-int main(int argc, char **argv){
-	int i;
-	FILE *in = fopen(argv[1],"r");
-
-	podzial(in,16,1,4);	
-
-return 0;
+	return dl_wektora;
 }
