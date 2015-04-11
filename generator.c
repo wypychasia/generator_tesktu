@@ -88,11 +88,3 @@ int generowanie(FILE *tekst,int ngram, FILE *plik){
 		}
 	return 0;
 }
-int main ( int argc, char **argv){
-
-	FILE *tekst = fopen (argv[1], "r");
-	FILE *plik = fopen (argv[2], "w");
-
-	generowanie(tekst,2,plik);
-}
-
