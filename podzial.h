@@ -8,6 +8,7 @@ typedef struct e{
 } lista_t;
 
 extern lista_t wektor[1000];
+extern int dl_wektora;
 
 char* czytaj_slowo(FILE *tekst);
 int dopisz_ngram(char *wyraz);

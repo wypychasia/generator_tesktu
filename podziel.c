@@ -61,7 +61,7 @@ lista_t *dodaj(lista_t *l, char *slowo){
 	}
 	return l;
 }
-int podzial(FILE *tekst, int ngram){
+int  podzial(FILE *tekst, int ngram){
 	int max_dl_txt = 100;
 	int i,k,f;
 	char wyraz[5000];
@@ -126,6 +126,5 @@ int podzial(FILE *tekst, int ngram){
                 }
 	 strcpy(sufiks, aux->wyraz);
                 dopisz_slowo(sufiks, wyraz);
-
 	return dl_wektora;
 }
