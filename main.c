@@ -15,7 +15,7 @@ int main(int argc, char  **argv)
   FILE *tekst;
   FILE *plik;
   int i;
-  int a=0,dlugosc=0;
+  int a=0,dlugosc=0,b=0;
 
   if(argc == 1){
 	pomoc();
@@ -28,6 +28,7 @@ int main(int argc, char  **argv)
   }
  for(i=1; i<argc; i++){
   if(strcmp(argv[i],"-txt")==0){
+      b=i+1;
       tekst = fopen(argv[i+1],"r");
   }	
   if(strcmp(argv[i],"-plik")==0){
@@ -64,11 +65,12 @@ int main(int argc, char  **argv)
 
   if(strcmp(argv[argc-1],"-stat")==0){
       FILE *plik = fopen(argv[a],"r");
-      statystyka(plik);
+      FILE *tekst = fopen(argv[b],"r");
+      statystyka(plik,tekst);
       return 0;
   }
 
   fclose(plik);
- 
+  fclose(tekst); 
   return 0;
 }
