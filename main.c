@@ -5,7 +5,7 @@
 #include "generator.h"
 
 void pomoc(){
-printf("Poczatkowo prosze o wpisanie flagi '-txt' z nazwa pliku, z ktorego będzie tworzony tekst wyjsciowy. Następnie z flagą '-ngram' wybrac zadana dlugosc ngramu oraz z flagą '-dl_txt' wpisac dlugosc tekstu wejsciowego. By otrzymać informacje o statystyce należy wpisać flagę '-stat'.\n");
+printf("Poczatkowo prosze o wpisanie flagi '-txt' z nazwa pliku, z ktorego będzie tworzony tekst wyjsciowy oraz flage '-plik' z nazwa pliku do ktorego wpisany zostanie tekst wyjsciowy. Następnie z flagą '-ngram' wybrac zadana dlugosc ngramu oraz z flagą '-dl_txt' wpisac dlugosc tekstu wejsciowego. By otrzymać informacje o statystyce należy wpisać flagę '-stat'.\n");
 }
 
 int main(int argc, char  **argv)
@@ -14,25 +14,36 @@ int main(int argc, char  **argv)
   int ngram = 0;
   int i;
 
-  FILE *in = (strcmp(argv[1],"-txt")==0) ? fopen(argv[1],"r") : "Prosze podac plik wejsciowy";
-  if (strcmp(argv[1], "-pomoc") == 0){
-    pomoc();
-    return 0;
-  }
-  for(i=1; i<=argc; i++){
-    if(strcmp(argv[i],"-dl_txt")==0)
-	dlugosc_tekstu = atoi(argv[i+1]);
-    if(strcmp(argv[i],"-ngram")==0)
-	ngram=atoi(argv[i+1]);	
-    if(strcmp(argv[i],"-stat")==0)
-	statystyka();
-    else
+  if(strcmp(argv[1],"-pomoc")==0)
 	pomoc();
-  }	
+
+  for(i=0; i<argc-1;i++){
+    if(strcmp(argv[i],"-txt")==0){
+      FILE *tekst = fopen(argv[i+1],"r");
+          if(tekst == NULL)
+	    printf("Blad we wczytywaniu tekstu\n");
+    }
+    else if(srtcmp(argv[i],"-plik")==0){
+      FILE *plik = fopen(argv[i+1],"w");
+        if(plik == NULL)
+     	  printf("Blad we wczytywaniu pliku wyjsiowego\n");  
+    }
+    else if(strcmp(argv[i],"-ngram")==0)
+      ngram=atoi(argv[i+1]);
+  	if(ngram == 0)
+  	  ngram = 2;
+    else if(strcmp(argv[i],"-dl_txt")){
+      dlugosc_tekstu=atoi(argv[i+1]);
+	if(dlugosc_tekstu == 0)
+	  printf("Brak dlugosci tesktu - problemy ze statystyka\n");  
+    }
+    else if(strcmp(argv[i],"-stat")==0)
+      statystyka();
   
-  if(ngram==0)
-	ngram=2;
-  if(dlugosc_tekstu ==0)
-	printf("Prosze podac dlugosc tekstu\n");
+    else
+      pomoc();
+}
+  if(tekst!=NULL && plik != NULL)
+     generowanie(tekst,ngram,plik);
   return 0;
 }
