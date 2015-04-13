@@ -3,7 +3,7 @@
 #include <string.h>
 #include "podzial.h"
 
-lista_t wektor[1000];
+lista_t wektor[10000];
 int dl_wektora =0;
 
 char* czytaj_slowo(FILE *tekst){
@@ -62,8 +62,7 @@ lista_t *dodaj(lista_t *l, char *slowo){
 	return l;
 }
 int  podzial(FILE *tekst, int ngram){
-	int max_dl_txt = 100;
-	int i,k,f;
+	int i,k;
 	char wyraz[5000];
 	char slowo[200];
 	char sufiks[200];

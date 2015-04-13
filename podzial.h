@@ -7,7 +7,7 @@ typedef struct e{
 	struct e *next;
 } lista_t;
 
-extern lista_t wektor[1000];
+extern lista_t wektor[10000];
 extern int dl_wektora;
 
 char* czytaj_slowo(FILE *tekst);

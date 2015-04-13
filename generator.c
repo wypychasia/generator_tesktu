@@ -34,7 +34,7 @@
 	 
  	return w;	
  }
-int generowanie(FILE *tekst,int ngram, FILE *plik){
+int generowanie(FILE *tekst,int ngram, FILE *plik, int dlugosc){
 	int c=0,d=0,i=0,j,k,s;
 	int licznik =0;
 	char pomocniczy[500];
@@ -44,7 +44,6 @@ int generowanie(FILE *tekst,int ngram, FILE *plik){
  	srand(time(NULL));
  	c= rand()/(RAND_MAX+1.0)*(dl_wektora);
 	strcpy(pomocniczy, wektor[c].wyraz);
-
 	fprintf(plik, "%s", pomocniczy);
 	for(aux=wektor[c].next; aux != NULL; aux=aux->next)
 		licznik++;
@@ -54,15 +53,13 @@ int generowanie(FILE *tekst,int ngram, FILE *plik){
 		return 0;
 	else
 	d=rand()/(RAND_MAX+1.0)*licznik;
-
 	for(k=0,tmp = wektor[c].next; k<d;tmp=tmp->next,k++);
 	fprintf(plik, "%s", tmp->wyraz);
 	fprintf(plik, "%s", " ");
 	usun_z_wektora(pomocniczy);
 	strcat(pomocniczy,tmp->wyraz);
 	strcat(pomocniczy," ");
-	
-	for(s=0; s<100; s++){
+	for(s=0; s<dlugosc; s++){
 		for(i=0; i<dl_wektora; i++){
 			if(strcmp(wektor[i].wyraz, pomocniczy)==0)
 				break;	
